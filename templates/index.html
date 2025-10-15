@@ -1,0 +1,58 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediCloudCare - Cloud Patient Management</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.clouds.min.js"></script>
+</head>
+<body class="min-h-screen bg-gray-50" id="vanta-bg">
+    <nav class="bg-white shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <i data-feather="cloud" class="h-8 w-8 text-blue-600"></i>
+                        <span class="ml-2 text-xl font-bold text-gray-900">MediCloudCare</span>
+                    </div>
+                </div>
+                <div class="flex items-center">
+                    {% if session.get('user_id') %}
+                        <a href="{{ url_for('dashboard') }}" class="text-gray-600 hover:text-gray-900 px-3 py-2 text-sm font-medium">Dashboard</a>
+                        <a href="{{ url_for('logout') }}" class="ml-4 inline-flex items-center px-4 py-2 text-sm font-medium rounded-md text-white bg-blue-600">Sign out</a>
+                    {% else %}
+                        <a href="{{ url_for('login') }}" class="text-gray-600 hover:text-gray-900 px-3 py-2 text-sm font-medium">Sign in</a>
+                        <a href="{{ url_for('register') }}" class="ml-4 inline-flex items-center px-4 py-2 text-sm font-medium rounded-md text-white bg-blue-600">Sign up</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="bg-gradient-to-r from-indigo-500 to-blue-700 text-white">
+        <div class="max-w-7xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:px-8 text-center">
+            <h1 class="text-4xl font-extrabold sm:text-5xl lg:text-6xl">Revolutionizing Patient Management</h1>
+            <p class="mt-6 max-w-lg mx-auto text-xl">A cloud-based PaaS with embedded Python for healthcare professionals to manage patient data securely and efficiently.</p>
+            <div class="mt-10 flex justify-center space-x-4">
+                <a href="{{ url_for('register') }}" class="inline-flex items-center px-6 py-3 text-base font-medium rounded-md text-blue-700 bg-white">Get Started</a>
+                <a href="#" class="inline-flex items-center px-6 py-3 text-base font-medium rounded-md text-white bg-blue-800 bg-opacity-60"><i data-feather="play" class="mr-2 h-5 w-5"></i> Watch Demo</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        VANTA.CLOUDS({
+            el: "#vanta-bg",
+            mouseControls: true,
+            touchControls: true,
+            gyroControls: false,
+            minHeight: 200.00,
+            minWidth: 200.00
+        });
+        feather.replace();
+    </script>
+</body>
+</html>

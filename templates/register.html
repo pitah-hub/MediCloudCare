@@ -1,0 +1,107 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - MediCloudCare</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+</head>
+<body class="min-h-screen bg-gray-50">
+    <nav class="bg-white shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <i data-feather="cloud" class="h-8 w-8 text-blue-600"></i>
+                        <span class="ml-2 text-xl font-bold text-gray-900">MediCloudCare</span>
+                    </div>
+                </div>
+                <div class="flex items-center">
+                    <a href="{{ url_for('login') }}" class="text-gray-600 hover:text-gray-900 px-3 py-2 text-sm font-medium">Already have an account? Sign in</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="min-h-full flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+        <div class="sm:mx-auto sm:w-full sm:max-w-md">
+            <div class="flex justify-center">
+                <i data-feather="user-plus" class="h-12 w-12 text-blue-600"></i>
+            </div>
+            <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">Create your free account</h2>
+            <p class="mt-2 text-center text-sm text-gray-600">Start managing patients in the cloud today</p>
+        </div>
+
+        <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+            <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                  {% if messages %}
+                    <div class="mb-4">
+                      {% for category, msg in messages %}
+                        <div class="p-3 rounded {{ 'bg-green-100 text-green-800' if category=='success' else ('bg-red-100 text-red-800' if category=='danger' else 'bg-yellow-100 text-yellow-800') }}">
+                          {{ msg }}
+                        </div>
+                      {% endfor %}
+                    </div>
+                  {% endif %}
+                {% endwith %}
+
+                <form class="space-y-6" action="{{ url_for('register') }}" method="POST">
+                    <div>
+                        <label for="email" class="block text-sm font-medium text-gray-700">Email address</label>
+                        <div class="mt-1">
+                            <input id="email" name="email" type="email" autocomplete="email" required class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+                        <div class="mt-1">
+                            <input id="password" name="password" type="password" autocomplete="new-password" required class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="confirm-password" class="block text-sm font-medium text-gray-700">Confirm Password</label>
+                        <div class="mt-1">
+                            <input id="confirm-password" name="confirm-password" type="password" autocomplete="new-password" required class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="practice-name" class="block text-sm font-medium text-gray-700">Practice Name (Optional)</label>
+                        <div class="mt-1">
+                            <input id="practice-name" name="practice-name" type="text" class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="role" class="block text-sm font-medium text-gray-700">I am a</label>
+                        <div class="mt-1">
+                            <select id="role" name="role" class="block w-full pl-3 pr-10 py-2 text-base border-gray-300 rounded-md">
+                                <option>Doctor</option>
+                                <option>Nurse</option>
+                                <option>Healthcare Administrator</option>
+                                <option>Other Medical Professional</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center">
+                        <input id="terms" name="terms" type="checkbox" class="h-4 w-4 text-blue-600 border-gray-300 rounded">
+                        <label for="terms" class="ml-2 block text-sm text-gray-900">I agree to the <a href="#" class="text-blue-600">Terms of Service</a> and <a href="#" class="text-blue-600">Privacy Policy</a></label>
+                    </div>
+
+                    <div>
+                        <button type="submit" class="w-full flex justify-center py-2 px-4 rounded-md text-sm font-medium text-white bg-blue-600">Create Account</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>feather.replace();</script>
+</body>
+</html>

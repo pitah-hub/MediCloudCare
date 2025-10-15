@@ -1,0 +1,69 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Edit Patient - MediCloudCare</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/feather-icons"></script>
+</head>
+<body class="min-h-screen bg-gray-50">
+  <nav class="bg-white shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between h-16">
+        <div class="flex items-center">
+          <div class="flex-shrink-0 flex items-center">
+            <i data-feather="cloud" class="h-8 w-8 text-blue-600"></i>
+            <span class="ml-2 text-xl font-bold text-gray-900">MediCloudCare</span>
+          </div>
+        </div>
+        <div class="flex items-center">
+          <a href="{{ url_for('dashboard') }}" class="text-gray-600 px-3 py-2">Back to Dashboard</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="max-w-3xl mx-auto py-10">
+    <div class="bg-white p-6 rounded shadow">
+      <h3 class="text-lg font-medium mb-4">Edit Patient</h3>
+      <form action="{{ url_for('edit_patient', pid=patient.id) }}" method="POST" class="space-y-4">
+        <div>
+          <label class="block text-sm font-medium text-gray-700">External ID (optional)</label>
+          <input name="external_id" value="{{ patient.external_id or '' }}" class="mt-1 block w-full border rounded px-3 py-2">
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Full name</label>
+          <input name="name" value="{{ patient.name }}" required class="mt-1 block w-full border rounded px-3 py-2">
+        </div>
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Age</label>
+            <input name="age" type="number" value="{{ patient.age or '' }}" class="mt-1 block w-full border rounded px-3 py-2">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Gender</label>
+            <select name="gender" class="mt-1 block w-full border rounded px-3 py-2">
+              <option {{ 'selected' if patient.gender=='Male' else '' }}>Male</option>
+              <option {{ 'selected' if patient.gender=='Female' else '' }}>Female</option>
+            </select>
+          </div>
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Condition</label>
+          <input name="condition" value="{{ patient.condition or '' }}" class="mt-1 block w-full border rounded px-3 py-2">
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Last visit</label>
+          <input name="last_visit" type="date" value="{{ patient.last_visit or '' }}" class="mt-1 block w-full border rounded px-3 py-2">
+        </div>
+        <div class="text-right">
+          <button type="submit" class="px-4 py-2 rounded bg-blue-600 text-white">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <script>feather.replace();</script>
+</body>
+</html>

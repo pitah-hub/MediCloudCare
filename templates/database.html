@@ -1,0 +1,93 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Database - MediCloudCare</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+</head>
+<body class="min-h-screen bg-gray-50">
+    <nav class="bg-white shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <i data-feather="cloud" class="h-8 w-8 text-blue-600"></i>
+                        <span class="ml-2 text-xl font-bold text-gray-900">MediCloudCare</span>
+                    </div>
+                </div>
+                <div class="flex items-center">
+                    <a href="{{ url_for('index') }}" class="text-gray-500 hover:text-gray-700 px-3 py-2 text-sm font-medium">Home</a>
+                    <a href="{{ url_for('dashboard') }}" class="ml-4 inline-flex items-center px-4 py-2 text-sm font-medium rounded-md text-white bg-blue-600">Dashboard</a>
+                    <a href="{{ url_for('logout') }}" class="ml-4 inline-flex items-center px-4 py-2 text-sm font-medium rounded-md text-gray-700 bg-white">Sign out</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="py-12 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto">
+            <div class="lg:text-center mb-6">
+                <h2 class="text-base text-blue-600 font-semibold tracking-wide uppercase">Patient Records</h2>
+                <p class="mt-2 text-3xl leading-8 font-extrabold text-gray-900 sm:text-4xl">Patient Database</p>
+            </div>
+
+            <div class="bg-white shadow overflow-hidden sm:rounded-lg">
+                <div class="px-4 py-5 sm:px-6 bg-gray-50 border-b border-gray-200 flex justify-between items-center">
+                    <h3 class="text-lg leading-6 font-medium text-gray-900">Patient Records</h3>
+                    <div>
+                        <a href="{{ url_for('add_patient') }}" class="inline-flex items-center px-4 py-2 rounded-md text-white bg-blue-600">+ Add Patient</a>
+                    </div>
+                </div>
+                <div class="px-4 py-5 sm:p-6">
+                    <table id="patientsTable" class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Age</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Gender</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Condition</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Last Visit</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            {% for p in patients %}
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ p.external_id or p.id }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ p.name }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ p.age or '' }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ p.gender or '' }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ p.condition or '' }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ p.last_visit or '' }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    <div class="flex space-x-2">
+                                        <a href="{{ url_for('edit_patient', pid=p.id) }}" class="text-blue-600 hover:text-blue-900"><i data-feather="edit" class="h-4 w-4"></i></a>
+                                        <form action="{{ url_for('delete_patient', pid=p.id) }}" method="POST" style="display:inline;">
+                                          <button type="submit" class="text-red-600 hover:text-red-900" onclick="return confirm('Delete this patient?')"><i data-feather="trash-2" class="h-4 w-4"></i></button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            $('#patientsTable').DataTable({ responsive: true });
+            feather.replace();
+        });
+    </script>
+</body>
+</html>
